@@ -22,26 +22,31 @@ def emotion_detector(text_to_analyze):
     # Sending a POST request to the emotion detection API
     response = requests.post(url, json=myobj, headers=headers)
 
+    # Check if the request status code is 400
+    if response.status_code == 400:
+        return {
+            'anger': None, 
+            'disgust': None, 
+            'fear': None,
+            'joy': None,
+            'sadness': None,
+            'dominant_emotion': None
+        }
+
     # Parsing the JSON response from the API
     formatted_response = json.loads(response.text)
     
     # Extracting sentiment anger, disgust, fear, joy, sadness
     emotions = formatted_response["emotionPredictions"][0]['emotion']
 
-    anger_score = emotions['anger']
-    disgust_score = emotions['disgust']
-    fear_score = emotions['fear']
-    joy_score = emotions['joy']
-    sadness_score = emotions['sadness']
-
     dominant_emotion = max(emotions, key=emotions.get)
 
     result = {
-        'anger': anger_score, 
-        'disgust': disgust_score, 
-        'fear': fear_score,
-        'joy': joy_score,
-        'sadness': sadness_score,
+        'anger': emotions['anger'], 
+        'disgust': emotions['disgust'], 
+        'fear':  emotions['fear'],
+        'joy': emotions['joy'],
+        'sadness': emotions['sadness'],
         'dominant_emotion': dominant_emotion
         }
 
