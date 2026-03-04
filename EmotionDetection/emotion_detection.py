@@ -42,7 +42,7 @@ def emotion_detector(text_to_analyze):
         'fear': fear_score,
         'joy': joy_score,
         'sadness': sadness_score,
-        'dominat_emotion': dominant_emotion
+        'dominant_emotion': dominant_emotion
         }
 
     # Return the text attribute of the response object
